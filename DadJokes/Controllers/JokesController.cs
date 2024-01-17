@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DadJokes.Data;
 using DadJokes.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DadJokes.Controllers
 {
@@ -23,8 +24,20 @@ namespace DadJokes.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Joke != null ? 
-                          View(await _context.Joke.ToListAsync()) :
+                          View(await _context.Joke.ToListAsync()) : //returns list
                           Problem("Entity set 'ApplicationDbContext.Joke'  is null.");
+        }
+
+        // GET: Jokes/SearchJokes
+        public async Task<IActionResult> SearchJokes()
+        {
+            return View(); //could put in name of view in paranthesis, alternatively if empty, it takes the name of the method auto
+        }
+
+        // PoST: Jokes/SearchJokesResults
+        public async Task<IActionResult> SearchJokesResults(String SearchPhrase)
+        {
+            return View("Index", await _context.Joke.Where(J => J.Question.Contains(SearchPhrase)).ToListAsync()); //could put in name of view in paranthesis, alternatively if empty, it takes the name of the method auto
         }
 
         // GET: Jokes/Details/5
@@ -46,6 +59,7 @@ namespace DadJokes.Controllers
         }
 
         // GET: Jokes/Create
+        [Authorize] //Requires Login
         public IActionResult Create()
         {
             return View();
@@ -54,6 +68,7 @@ namespace DadJokes.Controllers
         // POST: Jokes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Question,Answer")] Joke joke)
@@ -68,6 +83,7 @@ namespace DadJokes.Controllers
         }
 
         // GET: Jokes/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Joke == null)
@@ -86,6 +102,7 @@ namespace DadJokes.Controllers
         // POST: Jokes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Question,Answer")] Joke joke)
@@ -119,6 +136,7 @@ namespace DadJokes.Controllers
         }
 
         // GET: Jokes/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Joke == null)
