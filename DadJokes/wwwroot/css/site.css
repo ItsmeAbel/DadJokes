@@ -1,18 +1,26 @@
 html {
   font-size: 14px;
+  color: aqua;
+  background-color: aqua;
 }
 
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+    color: aqua;
+    background-color: aqua;
   }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    color: #ffee6f;
+    background-color: #011f37;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    color: #ffee6f;
+    background-color: #011f37;
 }

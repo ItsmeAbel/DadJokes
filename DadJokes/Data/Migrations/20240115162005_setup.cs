@@ -2,6 +2,8 @@
 
 #nullable disable
 
+//object relation mapper(ORM) that matches an object to a relational database
+
 namespace DadJokes.Data.Migrations
 {
     public partial class setup : Migration
