@@ -14,12 +14,14 @@ namespace DadJokes.Controllers
     public class JokesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public int _upvote;
+        public int _downvote;
 
         public JokesController(ApplicationDbContext context)
         {
             _context = context;
         }
-
+        
         // GET: Jokes
         public async Task<IActionResult> Index()
         {
@@ -171,6 +173,32 @@ namespace DadJokes.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Upvote(int id)
+        {
+
+            var joke = await _context.Joke.FindAsync(id);
+            if (joke != null) { return NotFound(); }
+
+            joke.Upvote += 1;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Downvote(int id, Joke joke)
+        {
+
+            joke.Upvote =- joke.Upvote;
+            _context.Update(joke);
+            await _context.SaveChangesAsync();
+
+            return View(joke);
+
         }
 
         private bool JokeExists(int id)

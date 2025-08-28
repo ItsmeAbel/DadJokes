@@ -7,29 +7,38 @@
 <h1>Index</h1>
 
 <p>
-    <h1><a asp-action="Create"> ➕ Add New </a></h1>
+    <h1><a asp-action="Create"> ➕ </a></h1>
 </p>
-<table class="table" style="color: white;">
-    <thead>
+<table class="table table-hover table-striped custom-table text-white">
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Question)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Question)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Question)
-            </td>
-            <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Show Answer</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span class="question-text">@Html.DisplayFor(modelItem => item.Question)</span>
+                    <div class="vote-buttons">
+                        <a asp-action="Upvote" asp-route-id="@item.Id" class="btn btn-success btn-sm">⬆️</a>
+                        <a asp-action="Downvote" asp-route-id="@item.Id" class="btn btn-danger btn-sm">⬇️</a>
+                    </div>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Show Answer</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+
+                    <div class="vote-counts">
+                        <span class="ml-2">⬆️ @item.Upvote</span>
+                        <span class="ml-2">⬇️ @item.Downvote</span>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
