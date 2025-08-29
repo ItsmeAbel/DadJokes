@@ -249,3 +249,19 @@ footer {
     .navbar-nav .nav-item .btn-login:hover {
         background: #d62828;
     }
+
+.typewriter {
+    justify-content: center; /*horizontal center*/
+    white-space: nowrap;
+    overflow: hidden;
+    display:flex;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    visibility: hidden; /* start invisible */
+}
+
+.homepage-intro p {
+    margin: 0.5rem 0;
+}
+
+

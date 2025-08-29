@@ -175,12 +175,13 @@ namespace DadJokes.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //handles riddle upvotes
         [Authorize]
         public async Task<IActionResult> Upvote(int id)
         {
 
             var joke = await _context.Joke.FindAsync(id);
-            if (joke != null) { return NotFound(); }
+            if (joke == null) return NotFound();
 
             joke.Upvote += 1;
             await _context.SaveChangesAsync();
@@ -189,15 +190,18 @@ namespace DadJokes.Controllers
 
         }
 
+        //handles riddle downvotes
         [Authorize]
-        public async Task<IActionResult> Downvote(int id, Joke joke)
+        public async Task<IActionResult> Downvote(int id)
         {
 
-            joke.Upvote =- joke.Upvote;
-            _context.Update(joke);
+            var joke = await _context.Joke.FindAsync(id);
+            if(joke == null) return NotFound();
+
+            joke.Downvote += 1;
             await _context.SaveChangesAsync();
 
-            return View(joke);
+            return RedirectToAction(nameof(Index));
 
         }
 
