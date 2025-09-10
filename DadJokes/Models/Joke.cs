@@ -1,4 +1,6 @@
-﻿namespace DadJokes.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace DadJokes.Models
 {
     public class Joke
     {
@@ -11,6 +13,9 @@
         public string Question { get; set; }
 
         public string Answer { get; set; }
+
+        public string UserId { get; set; } //user who created it
+
 
         public Joke()
         {

@@ -8,18 +8,21 @@ using Microsoft.EntityFrameworkCore;
 using DadJokes.Data;
 using DadJokes.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace DadJokes.Controllers
 {
     public class JokesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context; //to access joke/riddle info
+        private readonly UserManager<IdentityUser> _userManager; //to access user info
         public int _upvote;
         public int _downvote;
 
-        public JokesController(ApplicationDbContext context)
+        public JokesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         
         // GET: Jokes
@@ -73,14 +76,17 @@ namespace DadJokes.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Question,Answer")] Joke joke)
+        public async Task<IActionResult> Create([Bind("Id, Question,Answer")] Joke joke)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                joke.UserId = _userManager.GetUserId(User); //gets user id and stores it in db
                 _context.Add(joke);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
+
             return View(joke);
         }
 
@@ -98,6 +104,13 @@ namespace DadJokes.Controllers
             {
                 return NotFound();
             }
+
+            var currentUserId = _userManager.GetUserId(User);
+            if (currentUserId != joke.UserId) //Forbids edits if not the creater
+            {
+                return Forbid(); 
+
+            };
             return View(joke);
         }
 
@@ -151,8 +164,16 @@ namespace DadJokes.Controllers
             if (joke == null)
             {
                 return NotFound();
+                
+                
             }
 
+            var currentUserId = _userManager.GetUserId(User);
+            if (currentUserId != joke.UserId) //Forbids deletions if not the creater
+            {
+                return Forbid();
+
+            };
             return View(joke);
         }
 

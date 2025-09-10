@@ -29,6 +29,23 @@
     <a asp-action="Index">Back to List</a>
 </div>
 <div class="text-center">
-    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGwzNWJkbTkxMmF2MWFleDhmNWVmYjRleDllancweTR1bjgxaXY3NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dtGIRL0FDp6nnOPGb5/giphy.gif"
-         alt="Cool Animation" class="mx-auto w-94 h-94 rounded-lg shadow-lg">
+    @{
+        var gifs = new List<string>
+        {
+    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjQ1dWZtb2xtcmlud2R6NGtvdWV6b2sza2lnamJrMnJsZ3JybHZqbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/BXYKCLM8d18RraTFqt/giphy.gif",
+    "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTdpOTlieHB4MG14bzh5cTV4cm1lYTB0ejJlcDRwZGhwdTZwYW5oZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/CSSXojZNYza0076EZC/giphy.gif",
+    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExOW8yd3VkZWJ3Mzk5enBlOHdoY2ZwYTU5enRvcnF2ZXZuOGZidjZiOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/azfYU1dhK5ZloXdMPt/giphy.gif",
+    "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDNmaGs4ZzlhOTcwNXlsMGlseHAwMDQ0b2ZpZnhhNGZ2bmtsYWFkbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/s7Je05JJu75QxOB3ng/giphy.gif",
+    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXU4dGJrMTF4cWNqaWh4aDFqb3RsZWthaG5jN3FrMDJ4NjFlaWIydCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/AepMHW1bDrLnXyiqAU/giphy.gif",
+    "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnM5bjB2aTR0aHpnbWtlNDZ2cDFtMDBmbm9sYm50c3p6ZzNuNDM1NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fMbI6MjUFT4YxHdO3u/giphy.gif",
+        };
+
+        var rnd = new Random();
+        var chosenGif = gifs[rnd.Next(gifs.Count)];
+
+      
+
+   }
+    <img src="@chosenGif"
+         alt="Pengu Animation" class="img-fluid">
 </div>

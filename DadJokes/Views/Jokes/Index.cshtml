@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DadJokes.Models.Joke>
+@using System.Security.Claims;
 
 @{
     ViewData["Title"] = "Index";
@@ -29,8 +30,12 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Show Answer</a>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                    @if (item.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+
+                    }
 
                     <div class="vote-counts">
                         <span class="text-white ml-2">⬆️ @item.Upvote</span>
